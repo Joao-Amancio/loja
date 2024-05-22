@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Virtual Amancio</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h1>Minha Loja</h1>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="#checkout" id="checkout-link" onclick="showCheckout(event)">Finalizar Compras</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="carrossel1" class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/camisa1.png" alt="Imagem 1">
+                <div class="details">
+                    <p>Preço: R$ 100,00</p>
+                    <button onclick="addToCart(100)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/camisa2.png" alt="Imagem 2">
+                <div class="details">
+                    <p>Preço: R$ 150,00</p>
+                    <button onclick="addToCart(150)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <!-- Mais imagens conforme necessário -->
+        </div>
+        <button class="prev" onclick="prevSlide(0)">&#10094;</button>
+        <button class="next" onclick="nextSlide(0)">&#10095;</button>
+    </section>
+    
+    <section id="carrossel2" class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/calca1.png" alt="Imagem 3">
+                <div class="details">
+                    <p>Preço: R$ 200,00</p>
+                    <button onclick="addToCart(200)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/calca2.png" alt="Imagem 4">
+                <div class="details">
+                    <p>Preço: R$ 250,00</p>
+                    <button onclick="addToCart(250)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <!-- Mais imagens conforme necessário -->
+        </div>
+        <button class="prev" onclick="prevSlide(1)">&#10094;</button>
+        <button class="next" onclick="nextSlide(1)">&#10095;</button>
+    </section>
+    
+    <section id="carrossel3" class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/sapato1.png" alt="Imagem 5">
+                <div class="details">
+                    <p>Preço: R$ 300,00</p>
+                    <button onclick="addToCart(300)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/sapato2.png" alt="Imagem 6">
+                <div class="details">
+                    <p>Preço: R$ 350,00</p>
+                    <button onclick="addToCart(350)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <!-- Mais imagens conforme necessário -->
+        </div>
+        <button class="prev" onclick="prevSlide(2)">&#10094;</button>
+        <button class="next" onclick="nextSlide(2)">&#10095;</button>
+    </section>
+    
+    <section id="carrossel4" class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/cinto1.png" alt="Imagem 7">
+                <div class="details">
+                    <p>Preço: R$ 400,00</p>
+                    <button onclick="addToCart(400)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img style="width: 500px; height: 500px;" src="./assets/cinto2.png" alt="Imagem 8">
+                <div class="details">
+                    <p>Preço: R$ 450,00</p>
+                    <button onclick="addToCart(450)">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <!-- Mais imagens conforme necessário -->
+        </div>
+        <button class="prev" onclick="prevSlide(3)">&#10094;</button>
+        <button class="next" onclick="nextSlide(3)">&#10095;</button>
+    </section>
+    
+    <section id="cart-total">
+        <h2>Total das Compras: R$ <span id="total">0.00</span></h2>
+    </section>
+    
+    <section id="checkout" style="display: none;">
+        <h2>Finalizar Compras</h2>
+        <form>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="address">Endereço:</label>
+            <input type="text" id="address" name="address" required>
+            <label for="payment">Forma de Pagamento:</label>
+            <select id="payment" name="payment">
+                <option value="cartao">Cartão de Crédito</option>
+                <option value="boleto">Boleto</option>
+                <option value="pix">PIX</option>
+            </select>
+            <button type="submit">Finalizar Compra</button>
+        </form>
+    </section>
+    
+    <script src="./script.js"></script>
+</body>
+</html>

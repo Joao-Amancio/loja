@@ -1,0 +1,209 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+}
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: relative;
+}
+
+.menu-icon div {
+  background-color: white;
+  height: 4px;
+  margin: 6px 0;
+  transition: 0.4s;
+  position: absolute;
+  width: 100%;
+}
+
+.menu-icon .bar1 {
+  top: 0;
+}
+
+.menu-icon .bar2 {
+  top: 10px;
+}
+
+.menu-icon .bar3 {
+  top: 20px;
+}
+
+.change .bar1 {
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+.change .bar2 {
+  opacity: 0;
+}
+
+.change .bar3 {
+  transform: rotate(45deg) translate(-5px, -5px);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-container {
+  display: flex;
+  transition: transform 0.5s ease;
+  max-width: 1200px; /* Ajuste conforme necessário */
+}
+
+.carousel-slide {
+  min-width: 100%;
+  text-align: center;
+}
+
+.carousel img {
+  width: 100%;
+  display: block;
+}
+
+.details {
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+
+.details p {
+  margin: 10px 0;
+}
+
+.details button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.details button:hover {
+  background-color: #555;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+#cart-total {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  margin: 20px 0;
+}
+
+#checkout {
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin: 10px 0 5px;
+}
+
+form input,
+form select,
+form button {
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+  nav {
+    position: absolute;
+    top: 101px; /* Ajuste conforme a altura do cabeçalho */
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0.9;
+  }
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  nav ul li {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+  nav ul li a {
+    display: block;
+    padding: 10px;
+  }
+  nav.show {
+    display: flex;
+    animation: slideDown 0.3s forwards;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
