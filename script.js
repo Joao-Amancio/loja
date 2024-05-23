@@ -63,7 +63,39 @@ function addToCart(price) {
   document.getElementById("total").innerText = cartTotal.toFixed(2)
 }
 
+function handleTouchStart(event, carouselIndex) {
+  const firstTouch = event.touches[0]
+  xDown[carouselIndex] = firstTouch.clientX
+  yDown[carouselIndex] = firstTouch.clientY
+}
+
+function handleTouchMove(event, carouselIndex) {
+  if (!xDown[carouselIndex] || !yDown[carouselIndex]) {
+    return
+  }
+
+  const xUp = event.touches[0].clientX
+  const yUp = event.touches[0].clientY
+
+  const xDiff = xDown[carouselIndex] - xUp
+  const yDiff = yDown[carouselIndex] - yUp
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (xDiff > 0) {
+      nextSlide(carouselIndex)
+    } else {
+      prevSlide(carouselIndex)
+    }
+  }
+
+  xDown[carouselIndex] = null
+  yDown[carouselIndex] = null
+}
+
 // Inicialização dos carrosséis
+const xDown = [null, null, null, null]
+const yDown = [null, null, null, null]
+
 document.addEventListener("DOMContentLoaded", () => {
   showSlides(0, 0)
   showSlides(1, 0)
@@ -121,4 +153,49 @@ document.addEventListener("DOMContentLoaded", () => {
       isPaused[3] = false
     }
   })
+
+  // Adiciona eventos de toque para cada carrossel
+  document
+    .getElementById("carrossel1")
+    .addEventListener("touchstart", (event) => {
+      handleTouchStart(event, 0)
+    })
+  document
+    .getElementById("carrossel1")
+    .addEventListener("touchmove", (event) => {
+      handleTouchMove(event, 0)
+    })
+
+  document
+    .getElementById("carrossel2")
+    .addEventListener("touchstart", (event) => {
+      handleTouchStart(event, 1)
+    })
+  document
+    .getElementById("carrossel2")
+    .addEventListener("touchmove", (event) => {
+      handleTouchMove(event, 1)
+    })
+
+  document
+    .getElementById("carrossel3")
+    .addEventListener("touchstart", (event) => {
+      handleTouchStart(event, 2)
+    })
+  document
+    .getElementById("carrossel3")
+    .addEventListener("touchmove", (event) => {
+      handleTouchMove(event, 2)
+    })
+
+  document
+    .getElementById("carrossel4")
+    .addEventListener("touchstart", (event) => {
+      handleTouchStart(event, 3)
+    })
+  document
+    .getElementById("carrossel4")
+    .addEventListener("touchmove", (event) => {
+      handleTouchMove(event, 3)
+    })
 })
