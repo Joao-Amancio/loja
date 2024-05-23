@@ -224,3 +224,22 @@ document.addEventListener("DOMContentLoaded", () => {
       handleTouchEnd(event, 3)
     })
 })
+
+
+// JavaScript para exibir a seta quando o usuário rolar para o final da página
+document.addEventListener('scroll', function() {
+    const scrollTopButton = document.getElementById('back-to-top');
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        scrollTopButton.style.display = 'block';
+    } else {
+        scrollTopButton.style.display = 'none';
+    }
+});
+
+// JavaScript para rolar suavemente para o topo ao clicar na seta
+document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
