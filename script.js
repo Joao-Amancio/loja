@@ -67,6 +67,7 @@ function handleTouchStart(event, carouselIndex) {
   const firstTouch = event.touches[0]
   xDown[carouselIndex] = firstTouch.clientX
   yDown[carouselIndex] = firstTouch.clientY
+  stopAutoSlide(carouselIndex) // Pausa o auto deslizamento ao tocar
 }
 
 function handleTouchMove(event, carouselIndex) {
@@ -90,6 +91,10 @@ function handleTouchMove(event, carouselIndex) {
 
   xDown[carouselIndex] = null
   yDown[carouselIndex] = null
+}
+
+function handleTouchEnd(event, carouselIndex) {
+  startAutoSlide(carouselIndex) // Retoma o auto deslizamento ao terminar o toque
 }
 
 // Inicialização dos carrosséis
@@ -165,6 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("touchmove", (event) => {
       handleTouchMove(event, 0)
     })
+  document
+    .getElementById("carrossel1")
+    .addEventListener("touchend", (event) => {
+      handleTouchEnd(event, 0)
+    })
 
   document
     .getElementById("carrossel2")
@@ -175,6 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("carrossel2")
     .addEventListener("touchmove", (event) => {
       handleTouchMove(event, 1)
+    })
+  document
+    .getElementById("carrossel2")
+    .addEventListener("touchend", (event) => {
+      handleTouchEnd(event, 1)
     })
 
   document
@@ -187,6 +202,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("touchmove", (event) => {
       handleTouchMove(event, 2)
     })
+  document
+    .getElementById("carrossel3")
+    .addEventListener("touchend", (event) => {
+      handleTouchEnd(event, 2)
+    })
 
   document
     .getElementById("carrossel4")
@@ -197,5 +217,10 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("carrossel4")
     .addEventListener("touchmove", (event) => {
       handleTouchMove(event, 3)
+    })
+  document
+    .getElementById("carrossel4")
+    .addEventListener("touchend", (event) => {
+      handleTouchEnd(event, 3)
     })
 })
