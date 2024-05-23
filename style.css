@@ -85,8 +85,14 @@ nav ul li a {
 }
 
 .carousel-slide {
-  min-width: 100%;
+  /*min-width: 100%; */
+  display: none;
+  position: relative;
   text-align: center;
+}
+
+.carousel-slide img {
+    width: 100%;
 }
 
 .carousel img {
