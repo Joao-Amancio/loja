@@ -5,6 +5,196 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loja Virtual Amancio</title>
     <link rel="stylesheet" href="./style.css" />
+    <style>
+       h1 {
+            text-align: center;
+        }
+
+        .admin-panel, .login-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-panel input, .admin-panel textarea, .login-form input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .admin-panel button, .login-form button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #5cb85c;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .admin-panel button:hover, .login-form button:hover {
+            background-color: #4cae4c;
+        }
+
+        .product-list {
+            margin-top: 20px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-item button {
+            background-color: #d9534f;
+        }
+
+        .product-item button:hover {
+            background-color: #c9302c;
+        }
+
+        /* Estilos para a loja */
+        .product-display {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            width: 200px;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+        }
+
+        .product-card p {
+            margin: 5px 0;
+        }
+
+        .product-card button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Estilos para o menu */
+        .menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .menu li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .menu-icon {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .menu li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .menu-icon {
+                display: block;
+                cursor: pointer;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+
+            .menu-icon.change .bar1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .menu-icon.change .bar2 {
+                opacity: 0;
+            }
+
+            .menu-icon.change .bar3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .menu-icon .bar {
+                width: 35px;
+                height: 5px;
+                background-color: #333;
+                margin: 6px 0;
+                transition: 0.4s;
+            }
+        }
+
+        .image-container {
+    width: 100%;
+    height: auto;
+    max-width: 100%; /* Garante que o contêiner não ultrapasse a largura do carrossel */
+    max-height: 100%; /* Garante que o contêiner não ultrapasse a altura do carrossel */
+    overflow: hidden; /* Garante que a imagem não ultrapasse os limites do contêiner */
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
+    max-height: 100%; /* Garante que a imagem não ultrapasse a altura do contêiner */
+}
+
+
+    </style>
   </head>
   <body>
     <header>
@@ -14,10 +204,11 @@
         <div class="bar2"></div>
         <div class="bar3"></div>
       </div>
-      <nav style="text-align: center;" id="nav-menu">
+      <nav style="text-align: center" id="nav-menu">
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#" id="admin-link">Lojista</a></li>
           <li>
             <a href="#checkout" id="checkout-link" onclick="showCheckout(event)"
               >Finalizar Compras</a
@@ -27,11 +218,42 @@
       </nav>
     </header>
 
+    <main>
+    <!-- Formulário de login -->
+    <div class="login-form hidden">
+        <h1>Login do Lojista</h1>
+        <input type="text" id="username" placeholder="Nome de Usuário">
+        <input type="password" id="password" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <!-- Painel de administração -->
+    <div class="admin-panel hidden">
+        <h1>Painel de Administração</h1>
+        <input type="text" id="product-name" placeholder="Nome do Produto">
+        <input type="number" id="product-price" placeholder="Preço do Produto">
+        <textarea id="product-description" placeholder="Descrição do Produto"></textarea>
+        <input type="file" id="product-image" accept="image/*">
+        <select id="carousel-select">
+            <option value="1">Carrossel 1</option>
+            <option value="2">Carrossel 2</option>
+            <option value="3">Carrossel 3</option>
+            <option value="4">Carrossel 4</option>
+        </select>
+        <button onclick="addProduct()">Adicionar Produto</button>
+
+        <div class="product-list" id="product-list"></div>
+    </div>
+
+    <!-- Exibição dos produtos na loja -->
+    <div class="product-display" id="product-display"></div>
+
+
     <section id="carrossel1" class="carousel">
       <div class="carousel-container">
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/camisa1.png"
             alt="Imagem 1"
           />
@@ -42,7 +264,7 @@
         </div>
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/camisa2.png"
             alt="Imagem 2"
           />
@@ -61,7 +283,7 @@
       <div class="carousel-container">
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/calca1.png"
             alt="Imagem 3"
           />
@@ -72,7 +294,7 @@
         </div>
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/calca2.png"
             alt="Imagem 4"
           />
@@ -91,7 +313,7 @@
       <div class="carousel-container">
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/sapato1.png"
             alt="Imagem 5"
           />
@@ -102,7 +324,7 @@
         </div>
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/sapato2.png"
             alt="Imagem 6"
           />
@@ -121,7 +343,7 @@
       <div class="carousel-container">
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/cinto1.png"
             alt="Imagem 7"
           />
@@ -132,7 +354,7 @@
         </div>
         <div class="carousel-slide">
           <img
-            style="width: 450px; height: 450px"
+            
             src="./assets/cinto2.png"
             alt="Imagem 8"
           />
