@@ -6,13 +6,27 @@
     <title>Loja Virtual Amancio</title>
     <link rel="stylesheet" href="./style.css" />
     <style>
+        
+         .hidden { display: none; }
+        .product-image { width: 100%; height: 300px; object-fit: cover; justify-content: center; align-items: center; text-align: center;}
+        .swiper-container { width: 100%; height: 300px; margin-bottom: 20px; }
+        .swiper-slide { text-align: center; font-size: 18px; display: flex; justify-content: center; align-items: center; }
+        .swiper-slide img { width: 100%; height: auto; }
+
+        
        h1 {
             text-align: center;
+            
         }
+      
 
         .admin-panel, .login-form {
+            position: relative;
             max-width: 600px;
-            margin: 0 auto;
+            margin-top: 100px; 
+            justify-content: center;  
+            align-items: center; 
+            text-align: center;        
             background: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -42,6 +56,7 @@
 
         .product-list {
             margin-top: 20px;
+            
         }
 
         .product-item {
@@ -65,6 +80,7 @@
             flex-wrap: wrap;
             justify-content: center;
             margin-top: 20px;
+            
         }
 
         .product-card {
@@ -80,6 +96,7 @@
         .product-card img {
             max-width: 100%;
             height: auto;
+            
         }
 
         .product-card h3 {
@@ -178,21 +195,6 @@
             }
         }
 
-        .image-container {
-    width: 100%;
-    height: auto;
-    max-width: 100%; /* Garante que o contêiner não ultrapasse a largura do carrossel */
-    max-height: 100%; /* Garante que o contêiner não ultrapasse a altura do carrossel */
-    overflow: hidden; /* Garante que a imagem não ultrapasse os limites do contêiner */
-}
-
-.image-container img {
-    width: 100%;
-    height: auto;
-    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
-    max-height: 100%; /* Garante que a imagem não ultrapasse a altura do contêiner */
-}
-
 
     </style>
   </head>
@@ -220,7 +222,7 @@
 
     <main>
     <!-- Formulário de login -->
-    <div class="login-form hidden">
+    <div class="login-form hidden" id="login-form">
         <h1>Login do Lojista</h1>
         <input type="text" id="username" placeholder="Nome de Usuário">
         <input type="password" id="password" placeholder="Senha">
@@ -228,16 +230,16 @@
     </div>
 
     <!-- Painel de administração -->
-    <div class="admin-panel hidden">
+    <div class="admin-panel hidden" id="admin-panel">
         <h1>Painel de Administração</h1>
-        <input type="text" id="product-name" placeholder="Nome do Produto">
+<input type="text" id="product-name" placeholder="Nome do Produto">
         <input type="number" id="product-price" placeholder="Preço do Produto">
         <textarea id="product-description" placeholder="Descrição do Produto"></textarea>
         <input type="file" id="product-image" accept="image/*">
         <select id="carousel-select">
             <option value="1">Carrossel 1</option>
             <option value="2">Carrossel 2</option>
-            <option value="3">Carrossel 3</option>
+            <option value="3">Carrossel 3</option>  
             <option value="4">Carrossel 4</option>
         </select>
         <button onclick="addProduct()">Adicionar Produto</button>
@@ -258,6 +260,7 @@
             alt="Imagem 1"
           />
           <div class="details">
+            <h3>Camisa Polo</h3>
             <p>Preço: R$ 100,00</p>
             <button onclick="addToCart(100)">Adicionar ao Carrinho</button>
           </div>
@@ -269,6 +272,7 @@
             alt="Imagem 2"
           />
           <div class="details">
+            <h3>Camisa manga comprida</h3>
             <p>Preço: R$ 150,00</p>
             <button onclick="addToCart(150)">Adicionar ao Carrinho</button>
           </div>
@@ -417,5 +421,142 @@
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
     ></script>
     <script src="./script.js"></script>
+    <script>
+      function addProductToCarousel(product) {
+    const carouselId = `carrossel${product.carousel}`;
+    const carouselContainer = document.getElementById(carouselId).querySelector('.carousel-container');
+    
+    const slide = document.createElement('div');
+    slide.classList.add('carousel-slide');
+    slide.innerHTML = `
+        <img src="${product.imageUrl}" alt="${product.name}" />
+        <div class="details">
+            <p>Preço: R$ ${product.price}</p>
+            <button onclick="addToCart(${product.price})">Adicionar ao Carrinho</button>
+        </div>
+    `;
+    carouselContainer.appendChild(slide);
+}
+
+    </script>
+    <script>
+     function addProductToCarousel(product) {
+    const carouselId = `carrossel${product.carousel}`;
+    const carouselContainer = document.getElementById(carouselId).querySelector('.carousel-container');
+    
+    const slide = document.createElement('div');
+    slide.classList.add('carousel-slide');
+    slide.innerHTML = `
+        <img src="${product.imageUrl}" alt="${product.name}" />
+        <div class="details">
+            <p>Preço: R$ ${product.price}</p>
+            <button onclick="addToCart(${product.price})">Adicionar ao Carrinho</button>
+        </div>
+    `;
+    carouselContainer.appendChild(slide);
+}
+
+
+    </script>
+
+    <script>
+     function saveProduct(product) {
+    try {
+        // Tenta obter os produtos salvos do armazenamento local
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+        // Adiciona o novo produto à lista
+        products.push(product);
+        // Salva a lista atualizada no armazenamento local
+        localStorage.setItem('products', JSON.stringify(products));
+    } catch (error) {
+        console.error("Erro ao salvar o produto:", error);
+    }
+}
+
+function loadProducts() {
+    try {
+        // Tenta carregar os produtos salvos do armazenamento local
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        // Adiciona os produtos aos carrosséis correspondentes
+        products.forEach(product => addProductToCarousel(product));
+    } catch (error) {
+        console.error("Erro ao carregar os produtos:", error);
+    }
+}
+
+function addProductToCarousel(product) {
+    try {
+        // Obtém o ID do carrossel correspondente ao produto
+        const carouselId = `carrossel${product.carousel}`;
+        // Obtém o container do carrossel
+        const carouselContainer = document.getElementById(carouselId).querySelector('.carousel-container');
+
+        // Cria um novo slide para o produto
+        const slide = document.createElement('div');
+        slide.classList.add('carousel-slide');
+        slide.innerHTML = `
+            <img src="${product.imageUrl}" alt="${product.name}" />
+            <div class="details">
+                <p>Preço: R$ ${product.price}</p>
+                <button onclick="addToCart(${product.price})">Adicionar ao Carrinho</button>
+            </div>
+        `;
+        // Adiciona o slide ao carrossel
+        carouselContainer.appendChild(slide);
+    } catch (error) {
+        console.error("Erro ao adicionar produto ao carrossel:", error);
+    }
+}
+
+function initializeCarousels() {
+    try {
+        // Obtém todos os carrosséis na página
+        const carousels = document.querySelectorAll('.carousel');
+        carousels.forEach(carousel => {
+            // Obtém o índice do carrossel
+            const carouselIndex = carousel.id.replace('carrossel', '') - 1;
+            // Obtém o container do carrossel e os slides
+            const carouselContainer = carousel.querySelector('.carousel-container');
+            const slides = carouselContainer.querySelectorAll('.carousel-slide');
+            let currentSlideIndex = 0;
+
+            // Encontra o índice do slide atual
+            slides.forEach((slide, index) => {
+                if (slide.classList.contains('current')) {
+                    currentSlideIndex = index;
+                }
+            });
+
+            // Obtém os botões de navegação do carrossel
+            const prevButton = carousel.querySelector('.prev');
+            const nextButton = carousel.querySelector('.next');
+
+            // Adiciona eventos de clique aos botões de navegação
+            prevButton.addEventListener('click', () => {
+                currentSlideIndex = (currentSlideIndex === 0) ? slides.length - 1 : currentSlideIndex - 1;
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('current');
+                    if (index === currentSlideIndex) {
+                        slide.classList.add('current');
+                    }
+                });
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentSlideIndex = (currentSlideIndex === slides.length - 1) ? 0 : currentSlideIndex + 1;
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('current');
+                    if (index === currentSlideIndex) {
+                        slide.classList.add('current');
+                    }
+                });
+            });
+        });
+    } catch (error) {
+        console.error("Erro ao inicializar os carrosséis:", error);
+    }
+}
+    </script>
+    
   </body>
 </html>

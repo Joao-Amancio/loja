@@ -400,6 +400,7 @@ function addProduct() {
       price: parseFloat(price).toFixed(2),
       description: description,
       image: image,
+      carouselIndex: carouselIndex, // Salva também o índice do carrossel
     }
 
     products.push(product)
@@ -413,13 +414,13 @@ function addProduct() {
 
 // Carregar produtos salvos do armazenamento local
 function loadProducts() {
-    const savedProducts = localStorage.getItem('products');
-    if (savedProducts) {
-        products = JSON.parse(savedProducts);
-        products.forEach((product, index) => {
-            displayProducts(index % 4, product); // Exibir produtos nos carrosseis
-        });
-    }
+  const savedProducts = localStorage.getItem("products")
+  if (savedProducts) {
+    products = JSON.parse(savedProducts)
+    products.forEach((product, index) => {
+      displayProducts(index % 4, product) // Exibir produtos nos carrosseis
+    })
+  }
 }
 
 // Chamada para carregar produtos ao carregar a página
@@ -449,39 +450,40 @@ function displayProducts(carouselIndex, product) {
 
 // Exibição dos produtos no carrossel selecionado
 function displayProducts(carouselIndex, product) {
-    const carousel = document.getElementById(`carrossel${carouselIndex + 1}`);
+  const carousel = document.getElementById(`carrossel${carouselIndex + 1}`)
 
-    const newSlide = document.createElement('div');
-    newSlide.classList.add('carousel-slide');
+  const newSlide = document.createElement("div")
+  newSlide.classList.add("carousel-slide")
 
-    const imageContainer = document.createElement('div');
-    imageContainer.classList.add('image-container');
+  const imageContainer = document.createElement("div")
+  imageContainer.classList.add("image-container")
 
-    const newImage = new Image();
-    newImage.src = product.image;
-    newImage.alt = product.name;
+  const newImage = new Image()
+  newImage.src = product.image
+  newImage.alt = product.name
+  newImage.classList.add("product-image") // Adiciona a classe para aplicar estilos
 
-    imageContainer.appendChild(newImage);
-    newSlide.appendChild(imageContainer);
+  imageContainer.appendChild(newImage)
+  newSlide.appendChild(imageContainer)
 
-    const newTitle = document.createElement('h3');
-    newTitle.textContent = product.name;
-    newSlide.appendChild(newTitle);
+  const newTitle = document.createElement("h3")
+  newTitle.textContent = product.name
+  newSlide.appendChild(newTitle)
 
-    const newPrice = document.createElement('p');
-    newPrice.textContent = `Preço: R$ ${product.price}`;
-    newSlide.appendChild(newPrice);
+  const newPrice = document.createElement("p")
+  newPrice.textContent = `Preço: R$ ${product.price}`
+  newSlide.appendChild(newPrice)
 
-    const newDescription = document.createElement('p');
-    newDescription.textContent = product.description;
-    newSlide.appendChild(newDescription);
+  const newDescription = document.createElement("p")
+  newDescription.textContent = product.description
+  newSlide.appendChild(newDescription)
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Remover';
-    deleteButton.addEventListener('click', function() {
-        deleteProduct(products.indexOf(product), carouselIndex);
-    });
-    newSlide.appendChild(deleteButton);
+  const deleteButton = document.createElement("button")
+  deleteButton.textContent = "Remover"
+  deleteButton.addEventListener("click", function () {
+    deleteProduct(products.indexOf(product), carouselIndex)
+  })
+  newSlide.appendChild(deleteButton)
 
-    carousel.appendChild(newSlide);
+  carousel.appendChild(newSlide)
 }
